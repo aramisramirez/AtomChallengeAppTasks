@@ -6,7 +6,7 @@ import taskRoutes from "./api/tasks";
 import userRoutes from "./api/users";
 
 const app = express();
-app.use(cors({ origin: true }));
+app.use(cors());
 app.use(express.json());
 
 app.use("/tasks", taskRoutes);

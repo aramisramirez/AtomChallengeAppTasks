@@ -1,8 +1,6 @@
 import { Request, Response } from "express";
 import { db } from "../firebase";
 
-// Obtener las tareas
-
 export const getTasks = async (
   req: Request,
   res: Response
@@ -49,14 +47,12 @@ export const getTasks = async (
   }
 };
 
-// Crear una nueva tarea
-
 export const createTask = async (req: Request, res: Response) => {
   const { userEmail, title, description, completed } = req.body;
   console.log("Creando tarea...");
 
   try {
-    const currentDate = new Date(); // Alternativa a admin.firestore.Timestamp.now()
+    const currentDate = new Date();
 
     await db.collection("tasks").add({
       userEmail,
@@ -73,14 +69,12 @@ export const createTask = async (req: Request, res: Response) => {
   }
 };
 
-// Actualizar una tarea existente
 export const updateTask = async (req: Request, res: Response) => {
   const { id } = req.params;
   await db.collection("tasks").doc(id).update(req.body);
   res.sendStatus(204);
 };
 
-// Eliminar una tarea
 export const deleteTask = async (req: Request, res: Response) => {
   const { id } = req.params;
   await db.collection("tasks").doc(id).delete();

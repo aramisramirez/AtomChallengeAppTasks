@@ -18,13 +18,12 @@ export const getUser = async (
 
     if (snapshot.empty) {
       return res
-        .status(404)
+        .status(400)
         .json({ exists: false, message: "Usuario no encontrado" });
     }
 
     const userData = snapshot.docs[0].data();
 
-    // Aquí generamos el JWT
     const token = jwt.sign(
       { email: userData.email, id: snapshot.docs[0].id },
       JWT_SECRET,

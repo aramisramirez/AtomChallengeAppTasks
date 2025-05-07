@@ -1,6 +1,5 @@
-// middlewares/checkIfUserExists.ts
 import { Request, Response, NextFunction } from "express";
-import { db } from "../firebase"; // Ajusta la ruta según tu estructura
+import { db } from "../firebase";
 
 export const checkIfUserExists = async (
   req: Request,
