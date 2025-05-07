@@ -1,0 +1,58 @@
+<div class="container d-flex align-items-center justify-content-center vh-100">
+  <div class="card shadow" style="max-width: 400px; width: 100%">
+    <div class="card-body">
+      <h4 class="card-title text-center mb-4">Iniciar sesión</h4>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="mb-3">
+          <label class="form-label">Correo electrónico</label>
+          <input
+            type="email"
+            class="form-control"
+            formControlName="email"
+            [class.is-invalid]="
+              form.get('email')?.invalid && form.get('email')?.touched
+            "
+          />
+          @if (form.get('email')?.hasError('required')) {
+          <div class="invalid-feedback">El correo es requerido.</div>
+          } @if (form.get('email')?.hasError('email')) {
+          <div class="invalid-feedback">Correo no válido.</div>
+          }
+        </div>
+
+        <button
+          class="btn btn-primary w-100"
+          type="submit"
+          [disabled]="loading || form.invalid"
+        >
+          {{ loading ? "Ingresando..." : "Ingresar" }}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+@if (showConfirm) {
+<div class="modal fade show d-block" style="background: rgba(0, 0, 0, 0.5)">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Crear usuario</h5>
+      </div>
+      <div class="modal-body">
+        <p>El usuario no existe. ¿Deseas crearlo?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="cancelCreateUser()">
+          Cancelar
+        </button>
+        <button class="btn btn-primary" (click)="confirmCreateUser()">
+          Aceptar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}

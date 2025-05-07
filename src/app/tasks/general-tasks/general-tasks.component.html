@@ -1,0 +1,120 @@
+<div class="container py-4">
+  <h2 class="mb-4">Mis Tareas</h2>
+  <p class="mb-4">Prueba técnica de Bruno Ramírez</p>
+
+  <form
+    [formGroup]="taskForm"
+    (ngSubmit)="addTask()"
+    class="row g-2 mb-4 align-items-end"
+  >
+    <div class="col-md-5">
+      <label for="taskTitle" class="form-label">Título</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="title"
+        id="taskTitle"
+        placeholder="Título de la tarea"
+      />
+    </div>
+
+    <div class="col-md-5">
+      <label for="taskDescription" class="form-label">Descripción</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="description"
+        id="taskDescription"
+        placeholder="Descripción"
+      />
+    </div>
+
+    <div class="col-md-2 d-grid">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="taskForm.invalid"
+      >
+        Agregar
+      </button>
+    </div>
+  </form>
+
+  <form
+    [formGroup]="filterForm"
+    (ngSubmit)="applyFilters()"
+    class="row g-2 mb-4 align-items-end"
+  >
+    <div class="col-md-3">
+      <label for="userEmail" class="form-label">Correo</label>
+      <input
+        type="email"
+        class="form-control"
+        formControlName="visibleUserEmail"
+        id="userEmail"
+        readonly
+      />
+    </div>
+
+    <div class="col-md-3">
+      <label for="title" class="form-label">Título</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="title"
+        id="title"
+      />
+    </div>
+
+    <div class="col-md-2">
+      <label for="startDate" class="form-label">Fecha inicio</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="startDate"
+        id="startDate"
+      />
+    </div>
+
+    <div class="col-md-2">
+      <label for="endDate" class="form-label">Fecha fin</label>
+      <input
+        type="date"
+        class="form-control"
+        formControlName="endDate"
+        id="endDate"
+      />
+    </div>
+
+    <div class="col-md-2 d-grid">
+      <button type="submit" class="btn btn-secondary">Filtrar</button>
+    </div>
+  </form>
+
+  <ul class="list-group">
+    <li
+      *ngFor="let task of tasks"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      <div class="form-check">
+        <input
+          class="form-check-input"
+          type="checkbox"
+          [checked]="task.completed"
+          (change)="toggleTask(task)"
+          id="task-{{ task.id }}"
+        />
+        <label class="form-check-label ms-2" [for]="'task-' + task.id">
+          <strong [class.text-decoration-line-through]="task.completed">{{
+            task.title
+          }}</strong
+          ><br />
+          <small class="text-muted">{{ task.description }}</small>
+        </label>
+      </div>
+      <button class="btn btn-sm btn-danger" (click)="deleteTask(task.id)">
+        🗑️
+      </button>
+    </li>
+  </ul>
+</div>
