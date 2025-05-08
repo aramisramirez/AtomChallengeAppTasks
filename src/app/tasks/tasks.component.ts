@@ -31,7 +31,8 @@ export class TasksComponent {
       .then((result) => {
         if (result.isConfirmed) {
           localStorage.removeItem('token');
-          this.router.navigate(['login']);
+          // this.router.navigate(['login']);
+          this.router.navigateByUrl('login', { replaceUrl: true });
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({
             title: 'Cancelado',

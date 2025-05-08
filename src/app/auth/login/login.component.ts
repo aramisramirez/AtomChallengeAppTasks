@@ -55,7 +55,8 @@ export class LoginComponent {
       next: (user: any) => {
         console.log('Usuario encontrado:', user);
         window.localStorage.setItem('token', user.token);
-        this.router.navigate(['/tasks']);
+        // this.router.navigate(['/tasks']);
+        this.router.navigateByUrl('/tasks', { replaceUrl: true });
       },
       error: (err: any) => {
         if (err.status === 400) {
