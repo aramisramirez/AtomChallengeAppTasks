@@ -17,7 +17,7 @@
 >
 > ```sh
 > ng serve -o      # Para ejecutar el proyecto
-> ng build --aot --output-hashing=all   # Para generar un compilado que sirve para refrescar los cambios de typescript y convertirlos a javascript
+> ng build --configuration=production --output-hashing=all --no-cache   # Para generar un compilado que sirve para refrescar los cambios de typescript y convertirlos a javascript
 > npx firebase deploy # Para hostear el proyecto en firebase hosting
 > ```
 >
