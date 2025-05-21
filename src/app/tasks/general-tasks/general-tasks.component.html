@@ -93,35 +93,70 @@
     </div>
   </form>
   <hr />
+  @if (tasks.length > 0) {
   <h4 class="text-primary"><strong>Lista de tareas</strong></h4>
-  <ul class="list-group mt-4">
+  } @if (tasks.length == 0) {
+  <h4 class="text-center text-warning">No hay ninguna tarea creada.</h4>
+  }
+
+  <ul class="list-group mt-4 shadow-sm">
     @for (task of tasks; track $index) {
     <li
-      class="list-group-item d-flex justify-content-between align-items-center"
+      class="list-group-item d-flex justify-content-between align-items-center rounded mb-2"
+      [class.bg-light]="!task.completed"
+      [class.bg-success]="task.completed"
+      [class.text-white]="task.completed"
     >
-      <div class="form-check">
+      <div class="form-check d-flex align-items-center flex-grow-1">
         <input
-          class="form-check-input"
+          class="form-check-input me-3"
           type="checkbox"
           [checked]="task.completed"
           (change)="toggleTask(task)"
           id="task-{{ task.id }}"
         />
-        <label class="form-check-label ms-2" [for]="'task-' + task.id">
-          <strong [class.text-decoration-line-through]="task.completed">{{
-            task.title
-          }}</strong
-          ><br />
-          <small class="text-muted">{{ task.description }}</small>
+        <label
+          class="form-check-label flex-grow-1"
+          [for]="'task-' + task.id"
+          style="cursor: pointer"
+        >
+          <div class="d-flex justify-content-between align-items-center">
+            <strong
+              [class.text-decoration-line-through]="task.completed"
+              [class.text-white]="task.completed"
+              [class.text-dark]="!task.completed"
+              style="font-size: 1.1rem"
+            >
+              {{ task.title }}
+            </strong>
+            <span *ngIf="task.completed" class="badge bg-light text-success">
+              <i class="bi bi-check-circle-fill me-1"></i> Completada
+            </span>
+          </div>
+          <small
+            class="d-block"
+            [class.text-white]="task.completed"
+            [class.text-muted]="!task.completed"
+          >
+            {{ task.description }}
+          </small>
+          <small
+            class="d-block mt-1"
+            [class.text-white-50]="task.completed"
+            [class.text-secondary]="!task.completed"
+            style="font-size: 0.8rem"
+          >
+            Creado: {{ task.createdAt | date : "medium" }}
+          </small>
         </label>
       </div>
+
       <button
-        type="button"
-        class="btn btn-sm btn-danger"
+        class="btn btn-sm btn-danger ms-3"
         (click)="deleteTask(task.id)"
-        data-bs-toggle="tooltip"
-        data-bs-placement="bottom"
-        data-bs-title="Eliminar tarea"
+        placement="bottom"
+        ngbTooltip="Eliminar tarea"
+        aria-label="Eliminar tarea"
       >
         <i class="bi bi-trash3-fill"></i>
       </button>

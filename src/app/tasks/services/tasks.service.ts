@@ -3,12 +3,20 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.prod';
 
+// export interface Task {
+//   id: number;
+//   title: string;
+//   description: string;
+//   completed: boolean;
+//   userEmail: string;
+// }
+
 export interface Task {
   id: number;
   title: string;
   description: string;
   completed: boolean;
-  userEmail: string;
+  createdAt: Date; // o string con formato de fecha
 }
 
 @Injectable({
