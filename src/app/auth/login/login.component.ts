@@ -13,6 +13,7 @@ import {
   RouterOutlet,
 } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -50,12 +51,33 @@ export class LoginComponent {
 
     const email = this.form.get('email')?.value;
     this.loading = true;
+    let timerInterval: any;
+    Swal.fire({
+      title: '¡Ingresando a la cuenta!',
+      html: 'Nivel de carga en <b></b> segundos.',
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+        const timer = Swal.getPopup()?.querySelector('b');
+        timerInterval = setInterval(() => {
+          if (timer) {
+            timer.textContent = `${Swal.getTimerLeft()}`;
+          }
+        }, 100);
+      },
+      willClose: () => {
+        clearInterval(timerInterval);
+      },
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        console.log('I was closed by the timer');
+      }
+    });
 
     this.authService.checkUserExists(email).subscribe({
       next: (user: any) => {
-        console.log('Usuario encontrado:', user);
         window.localStorage.setItem('token', user.token);
-        // this.router.navigate(['/tasks']);
         this.router.navigateByUrl('/tasks', { replaceUrl: true });
       },
       error: (err: any) => {

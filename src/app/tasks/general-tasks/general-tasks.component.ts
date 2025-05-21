@@ -94,6 +94,11 @@ export class GeneralTasksComponent {
       this.tasks.push(newTask);
       this.taskForm.reset();
       this.applyFilters();
+      Swal.fire({
+        title: '¡Se a guardado la tarea exitosamente!',
+        icon: 'success',
+        draggable: true,
+      });
     });
   }
 
